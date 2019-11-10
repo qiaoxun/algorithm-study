@@ -42,4 +42,12 @@ public class MaxSubSum {
         System.out.println("MaxSubSum is " + max);
     }
 
+    @Test
+    public void test2() {
+        int[] arr = { -2, 11, -4, 13, -5, -2 };
+
+        
+
+    }
+
 }
