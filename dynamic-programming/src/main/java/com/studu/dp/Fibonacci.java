@@ -6,15 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class DynamicProgramming {
+public class Fibonacci {
 
     private AtomicInteger atomicInteger = new AtomicInteger();
 
     @Test
     public void test1() {
-        DynamicProgramming dynamicProgramming = new DynamicProgramming();
+        Fibonacci fibonacci = new Fibonacci();
         Long start = System.currentTimeMillis();
-        System.out.println(dynamicProgramming.fibonacciCallBack(40));
+        System.out.println(fibonacci.fibonacciCallBack(40));
         Long end = System.currentTimeMillis();
         System.out.println("cost " + (end - start));
     }
@@ -35,10 +35,10 @@ public class DynamicProgramming {
 
     @Test
     public void test2() {
-        DynamicProgramming dynamicProgramming = new DynamicProgramming();
+        Fibonacci fibonacci = new Fibonacci();
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
         Long start = System.currentTimeMillis();
-        System.out.println(dynamicProgramming.fibonacci2(10000, map));
+        System.out.println(fibonacci.fibonacci2(10000, map));
         Long end = System.currentTimeMillis();
         System.out.println("cost " + (end - start));
     }
@@ -68,9 +68,9 @@ public class DynamicProgramming {
 
     @Test
     public void test3() {
-        DynamicProgramming dynamicProgramming = new DynamicProgramming();
+        Fibonacci fibonacci = new Fibonacci();
         Long start = System.currentTimeMillis();
-        System.out.println(dynamicProgramming.fibonacci3(10000));
+        System.out.println(fibonacci.fibonacci3(10000));
         Long end = System.currentTimeMillis();
         System.out.println("cost " + (end - start));
     }
