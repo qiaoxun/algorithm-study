@@ -2,6 +2,8 @@ package com.studu.dp;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * 给定一个数，求数组中有没有数的和等于这个数
  */
@@ -76,6 +78,7 @@ public class SubSet {
                 subset[k][m] = a || b;
             }
         }
+        System.out.println(Arrays.toString(subset[arr.length-1]));
         return subset[arr.length - 1][s];
     }
 
