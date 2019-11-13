@@ -16,6 +16,12 @@ public class SubSet {
         System.out.println(subSet.recSubset(arr, arr.length - 1, 11));
         System.out.println(subSet.recSubset(arr, arr.length - 1, 12));
         System.out.println(subSet.recSubset(arr, arr.length - 1, 13));
+
+        System.out.println(subSet.dpSubset(arr, 9));
+        System.out.println(subSet.dpSubset(arr, 10));
+        System.out.println(subSet.dpSubset(arr, 11));
+        System.out.println(subSet.dpSubset(arr, 12));
+        System.out.println(subSet.dpSubset(arr, 13));
     }
 
     /**
@@ -50,11 +56,27 @@ public class SubSet {
     public boolean dpSubset(int arr[], int s) {
         int i = arr.length - 1;
 
-        if (s == 0) {
-            return true;
-        } else if ()
+        boolean[][] subset = new boolean[arr.length][s + 1];
+        for (int j = 0; j <= s; j++) {
+            subset[0][j] = true;
+        }
 
-        return false;
+        for (int j = 0; j < arr.length;j++) {
+            subset[j][0] = false;
+        }
+
+        if (arr[0] < (s + 1)) {
+            subset[0][arr[0]] = true;
+        }
+
+        for (int k = 1; k < arr.length; k++) {
+            for (int m = 1; m < (s + 1); m++) {
+                boolean a = subset[k - 1][s - arr[i]];
+                boolean b = subset[k - 1][s];
+                subset[k][m] = a || b;
+            }
+        }
+        return subset[arr.length - 1][s];
     }
 
 }
