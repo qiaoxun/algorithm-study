@@ -73,9 +73,16 @@ public class SubSet {
 
         for (int k = 1; k < arr.length; k++) {
             for (int m = 1; m < (s + 1); m++) {
-                boolean a = subset[k - 1][s - arr[i]];
-                boolean b = subset[k - 1][s];
-                subset[k][m] = a || b;
+                if (arr[k] > m) {
+                    subset[k][m] = subset[k - 1][m];
+                } else {
+                    boolean a = subset[k - 1][m - arr[i]];
+                    boolean b = subset[k - 1][m];
+                    System.out.println("a = " + a);
+                    System.out.println("b = " + b);
+                    System.out.println("a || b = " + (a || b));
+                    subset[k][m] = a || b;
+                }
             }
         }
         System.out.println(Arrays.toString(subset[arr.length-1]));
