@@ -2,6 +2,9 @@ package com.studu.dp;
 
 import org.junit.Test;
 
+/**
+ * https://leetcode-cn.com/problems/unique-paths/
+ */
 public class UniquePaths {
 
     @Test
@@ -26,8 +29,6 @@ public class UniquePaths {
         for (int j = 1; j < n; j++) {
             dp[0][j] = 1;
         }
-
-
 
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
