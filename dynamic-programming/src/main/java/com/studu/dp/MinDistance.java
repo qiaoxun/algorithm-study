@@ -19,8 +19,8 @@ public class MinDistance {
 
     @Test
     public void test() {
-        String str1 = "abc";
-        String str2 = "def";
+        String str1 = "intention";
+        String str2 = "execution";
 
         MinDistance minDistance = new MinDistance();
         System.out.println(minDistance.minDistanceDP(str1, str2));
@@ -45,7 +45,7 @@ public class MinDistance {
 
         for (int i = 1; i <= length1; i++) {
             for (int j = 1; j <= length2; j++) {
-                if (str1.charAt(i) == str2.charAt(j)) {
+                if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
                     dp[i][j] = dp[i - 1][j - 1];
                 } else {
                     // 1. replace
