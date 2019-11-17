@@ -2,6 +2,8 @@ package com.studu.dp;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * 所谓递归，便是把大问题”分治“成类似的小问题。
  * 假设，a 的长度是 m，b 的长度是 n，要求 a[1]a[2]...a[m] => b[1]b[2]...b[n] 的最小编辑距离，记为 d[m][n]。
@@ -19,11 +21,12 @@ public class MinDistance {
 
     @Test
     public void test() {
-        String str1 = "intention";
-        String str2 = "execution";
+        String str1 = "kitt";
+        String str2 = "sitt";
 
         MinDistance minDistance = new MinDistance();
-        System.out.println(minDistance.minDistanceDP(str1, str2));
+        System.out.println("minDistanceDP = " + minDistance.minDistanceDP(str1, str2));
+        System.out.println("minDistanceDPOPT = " + minDistance.minDistanceDPOPT(str1, str2));
     }
 
     public int minDistanceDP(String str1, String str2){
@@ -55,7 +58,6 @@ public class MinDistance {
                     // 3. delete
                     int c = dp[i - 1][j] + 1;
                     dp[i][j] = Math.min(Math.min(a, b), c);
-                    System.out.println("dp[i][j]=" + dp[i][j]);
                 }
             }
         }
@@ -69,6 +71,42 @@ public class MinDistance {
         }
 
         return dp[length1][length2];
+    }
+
+    public int minDistanceDPOPT(String str1, String str2){
+        int length1 = str1.length();
+        int length2 = str2.length();
+        if (length1 == 0 && length2 == 0) {
+            return 0;
+        }
+        int[] dp = new int[length2 + 1];
+
+        for (int i = 0; i <= length2; i++) {
+            dp[i] = i;
+        }
+
+        int temp = 0;
+
+        for (int i = 1; i <= length1; i++) {
+            temp = dp[0];
+            dp[0] = i;
+            for (int j = 1; j <= length2; j++) {
+                // dp[i -1][j - 1]
+                int pre = temp;
+                temp = dp[j];
+                if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                    System.out.println("pre = " + pre);
+                    dp[j] = pre;
+                } else {
+                    int a = dp[j - 1] + 1;
+                    int b = temp + 1;
+                    int c = pre + 1;
+                    dp[j] = Math.min(Math.min(a, b), c);
+                }
+            }
+            System.out.println(Arrays.toString(dp));
+        }
+        return dp[length2];
     }
 
 }
