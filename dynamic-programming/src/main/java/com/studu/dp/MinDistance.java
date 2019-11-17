@@ -21,8 +21,8 @@ public class MinDistance {
 
     @Test
     public void test() {
-        String str1 = "kitt";
-        String str2 = "sitt";
+        String str1 = "kitten";
+        String str2 = "sitting";
 
         MinDistance minDistance = new MinDistance();
         System.out.println("minDistanceDP = " + minDistance.minDistanceDP(str1, str2));
@@ -92,10 +92,48 @@ public class MinDistance {
             dp[0] = i;
             for (int j = 1; j <= length2; j++) {
                 // dp[i -1][j - 1]
+                if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                    System.out.println("temp = " + temp);
+                    int pre = dp[j];
+                    dp[j] = temp;
+                    temp = pre;
+                } else {
+                    int a = dp[j - 1] + 1;
+                    int b = dp[j] + 1;
+                    int c = temp + 1;
+                    temp = dp[j];
+                    dp[j] = Math.min(Math.min(a, b), c);
+                }
+
+            }
+            System.out.println(Arrays.toString(dp));
+        }
+        return dp[length2];
+    }
+
+    public int minDistanceDPOPT2(String str1, String str2){
+        int length1 = str1.length();
+        int length2 = str2.length();
+        if (length1 == 0 && length2 == 0) {
+            return 0;
+        }
+        int[] dp = new int[length2 + 1];
+
+        for (int i = 0; i <= length2; i++) {
+            dp[i] = i;
+        }
+
+        int temp = 0;
+
+        for (int i = 1; i <= length1; i++) {
+            temp = dp[0];
+            dp[0] = i;
+            for (int j = 1; j <= length2; j++) {
+                // dp[i -1][j - 1]
                 int pre = temp;
+                // dp[i - 1][j]
                 temp = dp[j];
                 if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
-                    System.out.println("pre = " + pre);
                     dp[j] = pre;
                 } else {
                     int a = dp[j - 1] + 1;
@@ -104,7 +142,6 @@ public class MinDistance {
                     dp[j] = Math.min(Math.min(a, b), c);
                 }
             }
-            System.out.println(Arrays.toString(dp));
         }
         return dp[length2];
     }
