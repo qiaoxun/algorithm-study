@@ -114,11 +114,17 @@ public class LongestPalindrome {
     private String findLongestSubStr(String s, int left, int right) {
         if ((right == left + 1) && s.charAt(left) != s.charAt(right)) return "";
 
+        /**
+         * left--; right++; 判断这行代码有没有执行
+         */
         boolean inWhile = false;
         String maxSub = "";
         while (left >= 0 && right < s.length()) {
-            if (s.charAt(left) != s.charAt(right))
+            if (s.charAt(left) != s.charAt(right)) {
+                inWhile = false;
                 break;
+            }
+
             left--; right++;
             inWhile = true;
         }
