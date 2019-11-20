@@ -2,6 +2,8 @@ package com.studu.dp;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * 给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
  *
@@ -13,11 +15,13 @@ public class LongestPalindrome {
     @Test
     public void test() {
         LongestPalindrome longestPalindrome = new LongestPalindrome();
-        String s = "sasddsas";
+        String s = "abcba";
         String result = longestPalindrome.longestPalindromeSubstring(s);
         String result1 = longestPalindrome.longestPalindromeSubstring1(s);
+        String result2 = longestPalindrome.longestPalindromeSubstringDP(s);
         System.out.println("result = " + result);
         System.out.println("result1 = " + result1);
+        System.out.println("result2 = " + result2);
     }
 
 
@@ -130,6 +134,45 @@ public class LongestPalindrome {
         }
         maxSub = inWhile ? s.substring(left + 1, right) : s.substring(left, right + 1);
         return maxSub;
+    }
+
+    /**
+     * dynamic programming
+     * @return
+     */
+    public String longestPalindromeSubstringDP(String s) {
+        char[] strCharArr = s.toCharArray();
+
+        int strLength = strCharArr.length;
+
+        if (strLength <= 1) {
+            return s;
+        }
+
+        String maxStr = String.valueOf(strCharArr[0]);
+
+        boolean[][] f = new boolean[strLength][strLength];
+
+        //初始化
+//        for (int i = 0; i < strLength; i++) {
+//            f[i][i] = true;
+//        }
+
+        for (int i = 1; i < strLength; i++) {
+            f[i][i] = true;
+            for (int j = 0; j < i; j++) {
+                f[i][j] = (strCharArr[i] == strCharArr[j] && (i - j < 2 || f[i - 1][j + 1]));
+                System.out.println(" i = " + i + ", j = " + j + ", f[" + i + "][" + j + "] = " + f[i][j] + ", strCharArr[i] = " + strCharArr[i] + ", strCharArr[j] = " + strCharArr[j]);
+                if (f[i][j]) {
+                    maxStr = (i - j + 1) > maxStr.length() ? s.substring(j, i + 1) : maxStr;
+                }
+            }
+        }
+
+        for (int i = 0; i < strLength; i++) {
+            System.out.println(Arrays.toString(f[i]));
+        }
+        return maxStr;
     }
 
 }
