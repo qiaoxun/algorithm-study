@@ -91,7 +91,7 @@ public class ConsistentHash<T> {
         System.out.println("location of each node are follows: ");
         consistentHash.testBalance();
 
-        String node = consistentHash.get("apple");
+        String node = consistentHash.get("test");
         System.out.println("node----------->:" + node);
     }
 }
