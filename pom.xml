@@ -11,6 +11,7 @@
     <modules>
         <module>dynamic-programming</module>
         <module>unclassified</module>
+        <module>sorting</module>
     </modules>
 
     <dependencies>
