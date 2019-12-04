@@ -44,9 +44,6 @@ public class MergeSort {
         System.arraycopy(arr, l, leftArr, 0, leftSize);
         System.arraycopy(arr, m, rightArr, 0, rightSize);
 
-//        System.out.println(Arrays.toString(leftArr));
-//        System.out.println(Arrays.toString(rightArr));
-
         int i = 0, j = 0, k = l;
 
         while (i < leftSize && j < rightSize) {
