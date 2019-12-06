@@ -77,8 +77,11 @@ public class CanJump {
 
     @Test
     public void test() {
-        int[] nums = {0, 3, 2, 1, 1, 3, 4};
+        int[] nums = {3, 2, 1, 1, 3, 4};
         System.out.println(canJump(nums));
+        System.out.println(canJumpDP(nums));
+        System.out.println(canJumpDP2(nums));
+        System.out.println(canJumpGreedy(nums));
     }
 
     /**
@@ -88,6 +91,76 @@ public class CanJump {
         UNKNOWN, GOOD, BAD;
     }
 
+    public boolean canJumpFromPositionDP(int position, int[] nums, Index[] indexes) {
 
+        if (indexes[position] != Index.UNKNOWN) {
+            return indexes[position] == Index.GOOD;
+        }
+
+        if (position == nums.length - 1 || nums[position] >= nums.length - position) {
+            indexes[position] = Index.GOOD;
+            return true;
+        }
+
+        int furthestPosition = position + nums[position];
+
+        for (int i = position + 1; i <= furthestPosition; i++) {
+            if (canJumpFromPositionDP(i, nums, indexes)) {
+                indexes[position] = Index.GOOD;
+                return true;
+            }
+        }
+
+        indexes[position] = Index.BAD;
+        return false;
+    }
+
+    public boolean canJumpDP(int[] nums) {
+        Index[] indexes = new Index[nums.length];
+        for (int i = 0; i < indexes.length; i++) {
+            indexes[i] = Index.UNKNOWN;
+        }
+
+        indexes[nums.length - 1] = Index.GOOD;
+        return canJumpFromPositionDP(0, nums, indexes);
+    }
+
+
+    public boolean canJumpDP2(int[] nums) {
+        Index[] indexes = new Index[nums.length];
+        for (int i = 0; i < indexes.length; i++) {
+            indexes[i] = Index.UNKNOWN;
+        }
+
+        indexes[nums.length - 1] = Index.GOOD;
+
+        for (int i = nums.length - 2; i >= 0 ; i--) {
+            int furthestPosition = Math.min(nums.length - 1, i + nums[i]);
+            for (int j = i + 1; j <= furthestPosition; j++) {
+                if (indexes[j] == Index.GOOD) {
+                    indexes[i] = Index.GOOD;
+                    break;
+                }
+            }
+        }
+
+        return indexes[0] == Index.GOOD;
+    }
+
+    /**
+     * 贪心算法
+     * 3, 2, 1, 1, 4
+     */
+    public boolean canJumpGreedy(int[] nums) {
+        int lastPosition = nums.length - 1;
+
+        for (int i = nums.length - 2; i >= 0; i--) {
+            if (nums[i] >= lastPosition - i) {
+                lastPosition = i;
+            }
+        }
+
+        return lastPosition == 0;
+    }
 
 }
