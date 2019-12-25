@@ -1,19 +1,17 @@
 package com.test;
 
-import org.junit.Test;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WaitNotify {
 
     public static void main(String[] args) {
-
+        Object lock = new Object();
         AtomicBoolean isOldRun = new AtomicBoolean(true);
-        Thread thread2 = null;
-        Thread thread1 = null;
 
-        thread1 = new Thread(new PrintOldValue(thread2, isOldRun));
-        thread2 =  new Thread(new PrintEvenValue(thread1, isOldRun));
+        PrintOldValue printOldValue = new PrintOldValue(lock, isOldRun);
+        PrintEvenValue printEvenValue = new PrintEvenValue(lock, isOldRun);
+        Thread thread1 = new Thread(printOldValue);
+        Thread thread2 =  new Thread(printEvenValue);
 
         thread1.start();
         thread2.start();
@@ -22,32 +20,33 @@ public class WaitNotify {
 }
 
 class PrintOldValue implements Runnable {
-    private Thread otherThread;
+    private Object lock;
     private AtomicBoolean isOldRun;
 
-    public PrintOldValue(Thread otherThread, AtomicBoolean isOldRun) {
-        this.otherThread = otherThread;
+    public PrintOldValue(Object lock, AtomicBoolean isOldRun) {
         this.isOldRun = isOldRun;
+        this.lock = lock;
     }
 
     @Override
     public void run() {
-        for (int i = 1; i <= 100; i++) {
-            if (i % 2 == 1) {
-                System.out.println("PrintOldValue " + isOldRun.get());
-                if (!isOldRun.get()) {
+        synchronized(lock) {
+            for (int i = 1; i <= 100; i++) {
+                if (i % 2 == 1) {
+                    if (!isOldRun.get()) {
+                        try {
+                            lock.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    System.out.println("Old : " + i);
+                    isOldRun.set(false);
                     try {
-                        Thread.currentThread().wait();
-                    } catch (InterruptedException e) {
+                        lock.notifyAll();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
-                System.out.println(i);
-                isOldRun.set(false);
-                try {
-                    otherThread.notifyAll();
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         }
@@ -56,33 +55,34 @@ class PrintOldValue implements Runnable {
 
 class PrintEvenValue implements Runnable {
 
-    private Thread otherThread;
+    private Object lock;
     private AtomicBoolean isOldRun;
 
-    public PrintEvenValue(Thread otherThread, AtomicBoolean isOldRun) {
-        this.otherThread = otherThread;
+    public PrintEvenValue(Object lock, AtomicBoolean isOldRun) {
         this.isOldRun = isOldRun;
+        this.lock = lock;
     }
 
     @Override
     public void run() {
-        for (int i = 1; i <= 100; i++) {
-            if (i % 2 == 0) {
-                if (isOldRun.get()) {
+        synchronized(lock) {
+            for (int i = 1; i <= 100; i++) {
+                if (i % 2 == 0) {
+                    if (isOldRun.get()) {
+                        try {
+                            lock.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    System.out.println("Even: " + i);
+                    isOldRun.set(true);
                     try {
-                        Thread.currentThread().wait();
-                    } catch (InterruptedException e) {
+                        lock.notifyAll();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-                System.out.println(i);
-                isOldRun.set(true);
-                try {
-                    otherThread.notifyAll();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                System.out.println(i);
             }
         }
     }
