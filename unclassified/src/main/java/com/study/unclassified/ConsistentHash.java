@@ -1,9 +1,110 @@
 package com.study.unclassified;
 
-public class ConsistentHash {
+import java.util.*;
 
-    public void consistentHash() {
+public class ConsistentHash<T> {
+    // 节点复制因子，实际节点个数
+    private final int numberOfReplicas;
 
+    // 存储虚拟节点的 hash 值 到真实节点的映射
+    private final SortedMap<Integer, T> circle = new TreeMap<>();
+
+    public ConsistentHash(int numberOfReplicas, Collection<T> nodes) {
+        this.numberOfReplicas = numberOfReplicas;
+        for (T node : nodes) {
+            add(node);
+        }
+    }
+
+    public void add(T node) {
+        for (int i = 0; i < numberOfReplicas; i++) {
+            // 对于一个实际节点的 node，对应 numberOfReplicas 个虚拟节点
+            // 不同的虚拟节点（i 不同）有不同的 hash 值，但都对应同一个实际机器 node
+            // 虚拟 node 一般是均衡分布在环上的，数据存储在顺时针方向的虚拟 node 上
+            String nodeStr = node.toString() + i;
+            int hashCode = nodeStr.hashCode();
+            circle.put(hashCode, node);
+        }
+    }
+
+    /**
+     * remove node form circle
+     * @param node
+     */
+    public void remove(T node) {
+        for (int i = 0; i < numberOfReplicas; i++) {
+            circle.remove((node.toString() + i).hashCode());
+        }
+    }
+
+    /**
+     * 获得一个最近的顺时针节点，根据给定的 key，获取 hash
+     * 然后再取得顺时针方向上最近的一个虚拟节点对应的实际节点
+     * 再从实际节点中获取数据
+     * @param key
+     * @return
+     */
+    public T get(Object key) {
+        if (circle.isEmpty()) return null;
+
+        int hash = key.hashCode(); // node 用 String 来表示，获得 node 在哈希环中的 hashCode
+
+        System.out.println("key " + key + " hash code is " + hash);
+
+        if (!circle.containsKey(hash)) {
+            SortedMap<Integer, T> tailMap = circle.tailMap(hash);
+            hash = tailMap.isEmpty() ? circle.firstKey() : tailMap.firstKey();
+        }
+        return circle.get(hash);
+    }
+
+    public long getSize() {
+        return circle.size();
+    }
+
+    /*
+     * 查看表示整个哈希环中各个虚拟节点位置
+     */
+    public void testBalance(){
+        Set<Integer> sets = circle.keySet();//获得TreeMap中所有的Key
+        SortedSet<Integer> sortedSets= new TreeSet<Integer>(sets);//将获得的Key集合排序
+        for(Integer hashCode : sortedSets){
+            System.out.println(hashCode);
+        }
+
+        System.out.println("----each location 's distance are follows: ----");
+        /*
+         * 查看相邻两个hashCode的差值
+         */
+        Iterator<Integer> it = sortedSets.iterator();
+        Iterator<Integer> it2 = sortedSets.iterator();
+        if(it2.hasNext())
+            it2.next();
+        long keyPre, keyAfter;
+        while(it.hasNext() && it2.hasNext()){
+            keyPre = it.next();
+            keyAfter = it2.next();
+            System.out.println("keyPre = " + keyPre);
+            System.out.println("keyAfter = " + keyAfter);
+            System.out.println(keyAfter - keyPre);
+        }
+    }
+
+    public static void main(String[] args) {
+        Set<String> nodes = new HashSet<String>();
+        nodes.add("A");
+        nodes.add("B");
+        nodes.add("C");
+
+        ConsistentHash<String> consistentHash = new ConsistentHash<String>(2, nodes);
+        consistentHash.add("D");
+
+        System.out.println("hash circle size: " + consistentHash.getSize());
+        System.out.println("location of each node are follows: ");
+        consistentHash.testBalance();
+
+        String node = consistentHash.get("test");
+        System.out.println("node----------->:" + node);
     }
 
 }
