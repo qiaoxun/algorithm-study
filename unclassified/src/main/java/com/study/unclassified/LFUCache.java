@@ -56,6 +56,7 @@ public class LFUCache {
         node.next = next;
         head.next = node;
         node.prev = head;
+        node.freq++;
     }
 
     private void removeNode(Node node) {
