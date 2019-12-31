@@ -52,6 +52,8 @@ public class ConsistentHash<T> {
         System.out.println("key " + key + " hash code is " + hash);
 
         if (!circle.containsKey(hash)) {
+            // Returns a view of the portion of this map whose keys are
+            // greater than or equal to {@code fromKey}
             SortedMap<Integer, T> tailMap = circle.tailMap(hash);
             hash = tailMap.isEmpty() ? circle.firstKey() : tailMap.firstKey();
         }
