@@ -3,9 +3,47 @@ package com.study.unclassified;
 public class CanCompleteCircuit {
 
     public static void main(String[] args) {
-        int[] gas = {1, 2, 3, 4, 5};
-        int[] cost = {3, 4, 5, 1, 2};
-        System.out.println(new CanCompleteCircuit().canCompleteCircuit(gas, cost));
+//        int[] gas = {4,5,2,6,5,3};
+//        int[] gas = {1,2,3,4,5};
+        int[] gas = {3, 3, 3};
+//        int[] cost = {3,2,7,3,2,9};
+//        int[] cost = {3,4,5,1,2};
+        int[] cost = {3, 3, 4};
+        System.out.println(new CanCompleteCircuit().canCompleteCircuit1(gas, cost));
+    }
+
+    /**
+     * 循环的方式去求和
+     */
+    public int canCompleteCircuit1(int[] gas, int[] cost) {
+        int length = gas.length;
+        int tempLength = 0;
+        tempLength = length;
+        int total = 0;
+        int pos = 0;
+        for (int i = 0; i < tempLength; i++) {
+            System.out.println("i = " + i);
+            if (tempLength > 2 * length - 1) {
+                pos = -1;
+                break;
+            }
+
+            int j = i;
+            if (j >= length) {
+                j = i - length;
+            }
+
+            total += gas[j] - cost[j];
+            System.out.println("total is " + total + ", pos is " + pos);
+            if (total < 0) {
+                tempLength = length + i + 1;
+                System.out.println("tempLength = " + tempLength);
+                total = 0;
+                pos = i + 1;
+            }
+        }
+        // position should less than length
+        return total >= 0 ? pos : -1;
     }
 
     public int canCompleteCircuit(int[] gas, int[] cost) {
