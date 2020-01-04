@@ -67,6 +67,8 @@ public class MiniKNums {
         return i;
     }
 
+    // --------------------------------------------------------------------------
+
     @Test
     public void testHeapSortVersion() {
         int[] arr = {1, 3, 5, 6, 2, 4, 3, 1, 4, 0, 3, 2, 0, 0};
@@ -110,6 +112,37 @@ public class MiniKNums {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j]= temp;
+    }
+
+    // --------------------------------------------------------------------------
+
+    @Test
+    public void test() {
+        int[] arr = {1, 3, 5, 6, 2, 4, 3, 1, 4, 0, 3, 2, 0, 0};
+        int[] smallArr = kSmallNums(arr, 4);
+        System.out.println(Arrays.toString(smallArr));
+    }
+
+    public int[] kSmallNums(int[] arr, int k) {
+        if (k > arr.length) return arr;
+
+        int[] kArr = new int[k];
+        System.arraycopy(arr, 0, kArr, 0, k);
+        sortArr(kArr);
+
+        for (int i = k; i < arr.length; i++) {
+            int max = kArr[kArr.length - 1];
+            if (arr[i] < max) {
+                kArr[kArr.length - 1] = arr[i];
+                sortArr(kArr);
+            }
+        }
+
+        return kArr;
+    }
+
+    private void sortArr(int[] arr) {
+        Arrays.sort(arr);
     }
 
 }
