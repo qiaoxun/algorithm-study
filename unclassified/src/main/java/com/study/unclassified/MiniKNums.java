@@ -67,4 +67,49 @@ public class MiniKNums {
         return i;
     }
 
+    @Test
+    public void testHeapSortVersion() {
+        int[] arr = {1, 3, 5, 6, 2, 4, 3, 1, 4, 0, 3, 2, 0, 0};
+        heapSortVersion(arr, 5);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    public void heapSortVersion(int arr[], int k) {
+        for (int i = 0; i < k; i++) {
+            buildHeap(arr, i);
+            swap(arr, 0, arr.length - 1 - i);
+        }
+    }
+
+    private void buildHeap(int[] arr, int index) {
+        int length = arr.length - index - 1;
+
+        int lastParentNodeIndex = (length - 1) / 2;
+
+        for (int i = lastParentNodeIndex; i >= 0; i--) {
+            heapify(arr, i, length);
+        }
+    }
+
+    private void heapify(int[] arr,int parentIndex, int length) {
+        int leftChildIndex = 2 * parentIndex + 1;
+        int rightChildIndex = 2 * parentIndex + 2;
+
+        if (rightChildIndex < length) {
+            if (arr[parentIndex] > arr[rightChildIndex]) {
+                swap(arr, parentIndex, rightChildIndex);
+            }
+        }
+
+        if (arr[parentIndex] > arr[leftChildIndex]) {
+            swap(arr, parentIndex, leftChildIndex);
+        }
+    }
+
+    public void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j]= temp;
+    }
+
 }
