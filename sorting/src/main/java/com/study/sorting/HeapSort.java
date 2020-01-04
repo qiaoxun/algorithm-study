@@ -2,6 +2,8 @@ package com.study.sorting;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * heap sort
  * 1. parent = (index - 1) / 2
@@ -18,6 +20,7 @@ public class HeapSort {
             buildHeap(arr, i);
             swap(arr, 0, i);
         }
+        System.out.println(Arrays.toString(arr));
     }
 
     /**
