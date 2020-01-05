@@ -2,6 +2,8 @@ package com.studu.dp;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * 给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。
  *
@@ -85,6 +87,28 @@ public class CoinChange {
         minCost = minCost == Integer.MAX_VALUE ? -1 : minCost;
         count[amount - 1] = minCost;
         return minCost;
+    }
+
+    @Test
+    public void testDP2() {
+        int[] coins = {1, 2, 5};
+        int amount = 14;
+        System.out.println(coinChangeDP1(coins, amount));
+    }
+
+    public int coinChangeDP1(int[] coins, int amount) {
+        int max = amount + 1;
+        int dp[] = new int[amount + 1];
+        Arrays.fill(dp, max);
+        dp[0] = 0;
+
+        for (int i = 1; i <= amount; i++) {
+            for (int j = 0; j < coins.length; j++) {
+                if (i >= coins[j])
+                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
+            }
+        }
+        return dp[amount] > amount ? -1 : dp[amount];
     }
 
 }
