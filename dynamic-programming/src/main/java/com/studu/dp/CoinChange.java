@@ -62,7 +62,7 @@ public class CoinChange {
 
     @Test
     public void testDP() {
-        int[] coins = {1, 2, 5};
+        int[] coins = { 1, 2, 5 };
         int amount = 14;
         System.out.println(coinChangeDP(coins, amount));
     }
