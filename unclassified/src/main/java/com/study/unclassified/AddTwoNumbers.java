@@ -7,6 +7,7 @@ public class AddTwoNumbers {
     @Test
     public void test() {
         int[] arr1 = { 9 };
+//        int[] arr2 = { 1, 9};
         int[] arr2 = { 1, 9, 9, 9, 9, 9, 9, 9, 9, 9 };
 
         ListNode dummy1 = new ListNode(0);
@@ -33,7 +34,7 @@ public class AddTwoNumbers {
             dummy2 = node;
         }
 
-        ListNode listNode = addTwoNumbers(dummy1Head, dummy2Head);
+        ListNode listNode = addTwoNumbers1(dummy1Head, dummy2Head);
         while (listNode != null) {
             System.out.print(listNode.val + " -> ");
             listNode = listNode.next;
@@ -82,6 +83,46 @@ public class AddTwoNumbers {
             list = list.next;
         }
         return sum;
+    }
+
+    // --------------------------------------- - - - -- - -- - - -- - - -- - - - -- -- - ----  - - - --
+
+    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
+        ListNode dummyNode = new ListNode(0);
+        ListNode currentNode = new ListNode(0);
+
+        int carry = 0;
+
+        while (l1 != null || l2 != null) {
+            int val = 0;
+            int val1 = l1 == null ? 0 : l1.val;
+            int val2 = l2 == null ? 0 : l2.val;
+
+            int sum = val1 + val2 + carry;
+            if (sum > 9) {
+                val = sum % 10;
+                carry = 1;
+            } else {
+                val = sum;
+                carry = 0;
+            }
+
+            ListNode listNode = new ListNode(val);
+
+            if (dummyNode.next == null) {
+                dummyNode.next = listNode;
+            }
+            currentNode.next = listNode;
+            currentNode = listNode;
+
+            l1 = (l1 == null || l1.next == null) ? null : l1.next;
+            l2 = (l2 == null || l2.next == null) ? null : l2.next;
+        }
+
+        if (carry == 1) {
+            currentNode.next = new ListNode(1);
+        }
+        return dummyNode.next;
     }
 
 }
