@@ -11,12 +11,12 @@ public class LongestSubstringWithoutRepeatingCharacters {
 
     @Test
     public void test() {
-        String str = "tmmzuxtt";
+        String str = "dvdf";
 //        System.out.println(lengthOfLongestSubstring(str));
 //        System.out.println(lengthOfLongestSubstring(str));
 //        System.out.println(lengthOfLongestSubstring1(str));
 //        System.out.println(lengthOfLongestSubstring2(str));
-        System.out.println(lengthOfLongestSubstring3(str));
+//        System.out.println(lengthOfLongestSubstring3(str));
         System.out.println(lengthOfLongestSubstring4(str));
     }
 
