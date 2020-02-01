@@ -7,9 +7,23 @@ public class ClimbingStairs {
     @Test
     public void test() {
         System.out.println(climbStairs(2));
+        System.out.println(climbStairs_BF(2));
         System.out.println(climbStairs(3));
+        System.out.println(climbStairs_BF(3));
         System.out.println(climbStairs(4));
+        System.out.println(climbStairs_BF(4));
     }
+
+    /**
+     * Brute Force
+     * @param n
+     * @return
+     */
+    public int climbStairs_BF(int n) {
+        if (n <= 2) return n;
+        return climbStairs_BF(n - 1) + climbStairs_BF(n - 2);
+    }
+
 
     /**
      * DP
