@@ -28,8 +28,12 @@ public class MinimumPathSum_1 {
         int[][] grid1 = {{1},{1}};
         System.out.println(minPathSum_DP(grid));
         System.out.println(minPathSum_DP1(grid));
+        System.out.println(minPathSum_BF(grid));
+        System.out.println(minPathSum_BF1(grid));
         System.out.println(minPathSum_DP(grid1));
         System.out.println(minPathSum_DP1(grid1));
+        System.out.println(minPathSum_BF(grid1));
+        System.out.println(minPathSum_BF1(grid1));
     }
 
     /**
@@ -37,18 +41,24 @@ public class MinimumPathSum_1 {
      * @param grid
      * @return
      */
-    public int minPathSum(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
+    public int minPathSum_BF(int[][] grid) {
+        return calculate(grid, 0, 0);
+    }
 
-        int minSum = 0;
+    public int calculate(int[][] grid, int i, int j) {
+        if (i == grid.length || j == grid[0].length) return Integer.MAX_VALUE;
+        if (i == grid.length - 1 && j == grid[0].length - 1) return grid[i][j];
+        return grid[i][j] + Math.min(calculate(grid, i + 1, j), calculate(grid, i, j + 1));
+    }
 
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+    public int minPathSum_BF1(int[][] grid) {
+        return calculate1(grid, grid.length - 1, grid[0].length - 1);
+    }
 
-            }
-        }
-        return minSum;
+    public int calculate1(int[][] grid, int i, int j) {
+        if (i < 0 || j < 0) return Integer.MAX_VALUE;
+        if (i == 0 && j == 0) return grid[i][j];
+        return grid[i][j] + Math.min(calculate1(grid, i - 1, j), calculate1(grid, i, j - 1));
     }
 
     /**
