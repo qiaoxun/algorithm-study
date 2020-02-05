@@ -28,4 +28,9 @@ public class DecodeWays {
         return sum;
     }
 
+    public int numDecodings_DP(String s) {
+
+        return 0;
+    }
+
 }
