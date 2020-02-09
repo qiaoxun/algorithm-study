@@ -11,6 +11,7 @@ public class DecodeWays {
         System.out.println("12 " + numDecodings("12"));
         System.out.println("27 " + numDecodings("27"));
         System.out.println("99 " + numDecodings("99"));
+        System.out.println("999 " + numDecodings("999"));
         System.out.println("120 " + numDecodings("120"));
         System.out.println("121 " + numDecodings("121"));
         System.out.println("1270 " + numDecodings("1270"));
@@ -23,7 +24,9 @@ public class DecodeWays {
         System.out.println("220 " + numDecodings("220"));
         System.out.println("2002 " + numDecodings("2002"));
         System.out.println("2000 " + numDecodings("2000"));
-        System.out.println("20000 " + numDecodings("20000"));
+        System.out.println("19963 " + numDecodings("19963"));
+        System.out.println("199 " + numDecodings("199"));
+        System.out.println("19 " + numDecodings("19"));
 //        char a = 1;
 //        char b = '0';
 //        char c = ' ';
@@ -34,37 +37,34 @@ public class DecodeWays {
 
     public int numDecodings(String s) {
         char[] chars = s.toCharArray();
-        if (chars.length == 1) {
-            if (chars[0] > '0') return 1;
-            else return 0;
-        }
+        if (chars[0] == '0') return 0;
 
-        char first = chars[0];
-        char second = chars[1];
+        int[] dp = new int[chars.length];
+        dp[0] = 1;
 
-        if (first == '0') {
-            return 0;
-        }
-
-        int sum = 0;
-        if (first < '3') {
-            if (second < '7' && second > '0') sum = 2;
-            else if (second == '0' || second >= '7') sum = 1;
-        }
-        for (int i = 2; i < chars.length; i++) {
-            char current = chars[i];
-            if (current == '0') {
-                if (second == '0' || second > '2') return 0;
-            } else {
-                if (current < '7') {
-                    if ('0' < second && second < '3') {
-                        sum++;
-                    }
+        for (int i = 1; i < chars.length; i++) {
+            char c = chars[i];
+            char before = chars[i - 1];
+            if (c == '0') {
+                if (before == '1' || before == '2') {
+                    dp[i] = i - 2 >= 0 ? dp[i - 2] : dp[i - 1];
+                } else {
+                    return 0;
                 }
+            } else if (before == '1') {
+                dp[i] = i - 2 > 0 ? dp[i - 1] + dp[i - 2] : dp[i - 1] + 1;
+            } else if (before == '2') {
+                if (c <= '6') {
+                    dp[i] = i - 2 > 0 ? dp[i - 1] + dp[i - 2] : dp[i - 1] + 1;
+                } else {
+                    dp[i] = dp[i - 1];
+                }
+            } else {
+                dp[i] = dp[i - 1];
             }
-            second = current;
         }
-        return sum;
+
+        return dp[chars.length - 1];
     }
 
     public int numDecodings_DP(String s) {
