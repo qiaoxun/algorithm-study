@@ -67,9 +67,4 @@ public class DecodeWays {
         return dp[chars.length - 1];
     }
 
-    public int numDecodings_DP(String s) {
-
-        return 0;
-    }
-
 }
