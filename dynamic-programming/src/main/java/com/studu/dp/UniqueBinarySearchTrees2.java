@@ -1,5 +1,8 @@
 package com.studu.dp;
 
+import org.junit.Test;
+
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,29 +27,42 @@ import java.util.List;
  *     \       /     /      / \      \
  *      3     2     1      1   3      2
  *     /     /       \                 \
- *    2     1         2                 3
+ *  *    2     1         2                 3
  */
 public class UniqueBinarySearchTrees2 {
-    public List<TreeNode> generateTrees(int n) {
 
-        return null;
+    @Test
+    public void test() {
+        System.out.println(generateTrees(3).size());
     }
 
-    private void putNode(TreeNode node, TreeNode newNode) {
-        if (newNode.val > node.val) {
-            if (node.right != null) {
-                putNode(node.right, newNode);
-            } else {
-                node.right = newNode;
-            }
-        } else {
-            if (node.left != null) {
-                putNode(node.left, newNode);
-            } else {
-                node.left = newNode;
+    public List<TreeNode> generateTrees(int n) {
+        return generateTrees(1, n);
+    }
+
+    public List<TreeNode> generateTrees(int start, int end) {
+        List<TreeNode> list = new LinkedList<>();
+        if (start > end) {
+            list.add(null);
+            return list;
+        }
+
+        for (int i = start; i <= end; i++) {
+            List<TreeNode> leftList = generateTrees(start, i - 1);
+            List<TreeNode> rightList = generateTrees(i + 1, end);
+
+            for (int j = 0; j < leftList.size(); j++) {
+                for (int k = 0; k < rightList.size(); k++) {
+                    TreeNode treeNode = new TreeNode(i);
+                    treeNode.left = leftList.get(j);
+                    treeNode.right = rightList.get(k);
+                    list.add(treeNode);
+                }
             }
         }
+        return list;
     }
+
 }
 
 class TreeNode {
