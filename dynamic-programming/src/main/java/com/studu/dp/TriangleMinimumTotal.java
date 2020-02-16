@@ -2,7 +2,9 @@ package com.studu.dp;
 
 import org.junit.Test;
 
+import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,7 +59,13 @@ public class TriangleMinimumTotal {
         triangle1.add(l33);
 
         System.out.println(minimumTotal(triangle));
+        System.out.println(minimumTotal1(triangle));
+        System.out.println(minimumTotal_DP(triangle));
+        System.out.println(minimumTotal_DP1(triangle));
         System.out.println(minimumTotal(triangle1));
+        System.out.println(minimumTotal1(triangle1));
+        System.out.println(minimumTotal_DP(triangle1));
+        System.out.println(minimumTotal_DP1(triangle1));
     }
 
 
@@ -67,31 +75,101 @@ public class TriangleMinimumTotal {
      * @return
      */
     public int minimumTotal(List<List<Integer>> triangle) {
-        int minimumSum = triangle.get(0).get(0);
-
-        minimumSum += findMinimumTotal(triangle, 1, 0);
-
-        return minimumSum;
+        return findMinimumTotal(triangle, 0, 0);
     }
 
-    public int findMinimumTotal(List<List<Integer>> triangle, int start, int position) {
-        if (start == triangle.size()) return 0;
+    public int findMinimumTotal(List<List<Integer>> triangle, int level, int position) {
+        if (level == triangle.size() - 1) return triangle.get(level).get(position);
 
-        int sumA = triangle.get(start).get(position) + findMinimumTotal(triangle, start + 1, position);
-        int sumB = triangle.get(start).get(position + 1) + findMinimumTotal(triangle, start + 1, position + 1);
+        int sumA = triangle.get(level).get(position) + findMinimumTotal(triangle, level + 1, position);
+        int sumB = triangle.get(level).get(position) + findMinimumTotal(triangle, level + 1, position + 1);
+
+        return sumA < sumB ? sumA : sumB;
+    }
+
+    /**
+     * Brute Force - 1 ms, 39.4 MB
+     * @param triangle
+     * @return
+     */
+    public int minimumTotal1(List<List<Integer>> triangle) {
+        Integer[][] memo = new Integer[triangle.size()][triangle.size()];
+        return findMinimumTotal1(triangle, 0, 0, memo);
+    }
+
+    public int findMinimumTotal1(List<List<Integer>> triangle, int level, int position, Integer[][] memo) {
+        int value = triangle.get(level).get(position);
+        if (level == triangle.size() - 1) return value;
+
+        if (memo[level + 1][position] == null) {
+            memo[level + 1][position] = findMinimumTotal1(triangle, level + 1, position, memo);
+        }
+
+        if (memo[level + 1][position + 1] == null) {
+            memo[level + 1][position + 1] = findMinimumTotal1(triangle, level + 1, position + 1, memo);
+        }
+
+        int sumA = value + memo[level + 1][position];
+        int sumB = value + memo[level + 1][position + 1];
 
         return sumA < sumB ? sumA : sumB;
     }
 
     /**
      * DP
+     * 自顶向下
      */
     public int minimumTotal_DP(List<List<Integer>> triangle) {
-        int minimumSum = triangle.get(0).get(0);
+        int len = triangle.size();
+        int[][] dp = new int[len][len];
 
-        minimumSum += findMinimumTotal(triangle, 1, 0);
+        dp[0][0] = triangle.get(0).get(0);
+        if (len == 1) return dp[0][0];
 
-        return minimumSum;
+        dp[1][0] = dp[0][0] + triangle.get(1).get(0);
+        dp[1][1] = dp[0][0] + triangle.get(1).get(1);
+
+        for (int i = 2; i < len; i++) {
+            List<Integer> rowList = triangle.get(i);
+            for (int j = 0, len1 = rowList.size(); j < len1; j++) {
+                if (j == 0) {
+                    dp[i][j] = rowList.get(j) + dp[i - 1][j];
+                } else if (j == rowList.size() - 1) {
+                    dp[i][j] = rowList.get(j) + dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = rowList.get(j) + Math.min(dp[i - 1][j], dp[i - 1][j - 1]);
+                }
+            }
+        }
+
+        int ans = dp[len - 1][0];
+        for (int i = 1; i < len; i++) {
+            int temp = dp[len - 1][i];
+            ans = ans > temp ? temp : ans;
+        }
+
+        return ans;
     }
 
+    /**
+     * DP 自底向上
+     * @param triangle
+     * @return
+     */
+    public int minimumTotal_DP1(List<List<Integer>> triangle) {
+        int len = triangle.size();
+        int[][] dp = new int[len][len];
+
+        for (int i = len - 1; i >= 0; i--) {
+            List<Integer> list = triangle.get(i);
+            for (int j = 0, len1 = list.size(); j < len1; j++) {
+                if (i == len - 1) {
+                    dp[i][j] = list.get(j);
+                } else {
+                    dp[i][j] = list.get(j) + Math.min(dp[i + 1][j], dp[i + 1][j + 1]);
+                }
+            }
+        }
+        return dp[0][0];
+    }
 }
