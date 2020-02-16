@@ -172,4 +172,26 @@ public class TriangleMinimumTotal {
         }
         return dp[0][0];
     }
+
+    /**
+     * DP 自底向上
+     * @param triangle
+     * @return
+     */
+    public int minimumTotal_DP1_1(List<List<Integer>> triangle) {
+        int len = triangle.size();
+        int[] dp = new int[len];
+
+        for (int i = len - 1; i >= 0; i--) {
+            List<Integer> list = triangle.get(i);
+            for (int j = 0, len1 = list.size(); j < len1; j++) {
+                if (i == len - 1) {
+                    dp[j] = list.get(j);
+                } else {
+                    dp[j] = list.get(j) + Math.min(dp[j], dp[j + 1]);
+                }
+            }
+        }
+        return dp[0];
+    }
 }
