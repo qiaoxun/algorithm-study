@@ -44,7 +44,6 @@ public class QuickSort {
             arr[i] = pivot;
         }
 
-        System.out.println("l is " + l + ", i is " + i + ", r is " + r);
         quickSort(arr, l, i - 1);
         quickSort(arr, i + 1, r);
     }
