@@ -12,8 +12,25 @@ public class MaximalSquare {
         char[] char2 = {'1', '1', '1', '1', '1'};
         char[] char3 = {'1', '0', '0', '1', '0'};
         char[][] matrix = {char0, char1, char2, char3};
+        char[][] matrix1 = {{'0'}};
+        char[][] matrix2 = {
+                {'1','0','1','1','0','1'},
+                {'1','1','1','1','1','1'},
+                {'0','1','1','0','1','1'},
+                {'1','1','1','0','1','0'},
+                {'0','1','1','1','1','1'},
+                {'1','1','0','1','1','1'}
+        };
+
         System.out.println(maximalSquare(matrix));
+        System.out.println(maximalSquare(matrix1));
+        System.out.println(maximalSquare(matrix2));
         System.out.println(maximalSquare1(matrix));
+        System.out.println(maximalSquare1(matrix1));
+        System.out.println(maximalSquare1(matrix2));
+        System.out.println(maximalSquare2(matrix));
+        System.out.println(maximalSquare2(matrix1));
+        System.out.println(maximalSquare2(matrix2));
     }
 
     public int maximalSquare(char[][] matrix) {
@@ -83,6 +100,31 @@ public class MaximalSquare {
             }
         }
         return max;
+    }
+
+    public int maximalSquare2(char[][] matrix) {
+        if (matrix.length == 0) return 0;
+        int a = matrix.length;
+        int b = matrix[0].length;
+
+        int[] dp = new int[b + 1];
+        int max = 0;
+        int prev = 0;
+
+        for (int i = 1; i <= a; i++) {
+            for (int j = 1; j <= b; j++) {
+                if (matrix[i - 1][j - 1] == '1') {
+                    int miniNum = Math.min(Math.min(dp[j], dp[j - 1]), prev);
+                    prev = dp[j];
+                    dp[j] = miniNum + 1;
+                    max = max > dp[j] ? max : dp[j];
+                } else {
+                    prev = 0;
+                    dp[j] = 0;
+                }
+            }
+        }
+        return max * max;
     }
 
 }
