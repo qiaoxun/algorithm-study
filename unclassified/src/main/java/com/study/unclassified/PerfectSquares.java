@@ -25,6 +25,25 @@ public class PerfectSquares {
         return res;
     }
 
-//    public int ns(int n)
+    public int numSquares1(int n) {
+        int[] memo = new int[n];
+        return calc(n, memo);
+    }
+
+    public int calc(int n, int[] memo) {
+        if (memo[n] != 0) return memo[n];
+
+        int val = (int) Math.sqrt(n);
+        if (val * val == n) {
+            return 1;
+        }
+
+        int res = Integer.MAX_VALUE;
+        for (int i = 1; i * i < n; i++) {
+            res = Math.min(res, numSquares(n - i * i) + 1);
+            System.out.println(i);
+        }
+        return memo[n] = res;
+    }
 
 }
