@@ -4,6 +4,9 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
+/**
+ * https://leetcode.com/problems/range-sum-query-immutable/
+ */
 public class RangeSumQueryImmutable {
     @Test
     public void test() {
