@@ -43,14 +43,34 @@ public class LongestPalindromicSubstring_B {
         if (right - left == 1) return true;
 
         while (left < right) {
-            if (chars[left] != chars[right]) break;
+            if (chars[left] != chars[right]) return false;
             left++;
             right--;
         }
 
-        if (right > left) {
-            return false;
-        }
         return true;
     }
+
+
+    @Test
+    public void test1() {
+//        String str = "abaccdcca";
+//        String str1 = "cbbd";
+//        String str2 = "babad";
+//        String str3 = "abc";
+//        String str4 = "aaaaaa";
+        String str5 = "abcda";
+        String str6 = "babad";
+//        System.out.println(longestPalindrome(str));
+//        System.out.println(longestPalindrome(str1));
+//        System.out.println(longestPalindrome(str2));
+//        System.out.println(longestPalindrome(str3));
+//        System.out.println(longestPalindrome(str4));
+        System.out.println(longestPalindrome(str5));
+        System.out.println(longestPalindrome(str6));
+    }
+
+
+
+
 }

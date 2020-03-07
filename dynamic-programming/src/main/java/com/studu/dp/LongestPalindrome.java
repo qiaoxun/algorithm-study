@@ -15,7 +15,7 @@ public class LongestPalindrome {
     @Test
     public void test() {
         LongestPalindrome longestPalindrome = new LongestPalindrome();
-        String s = "abcba";
+        String s = "abcda";
         String result = longestPalindrome.longestPalindromeSubstring(s);
         String result1 = longestPalindrome.longestPalindromeSubstring1(s);
         String result2 = longestPalindrome.longestPalindromeSubstringDP(s);
