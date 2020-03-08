@@ -70,7 +70,11 @@ public class LongestPalindromicSubstring_B {
         System.out.println(longestPalindrome_DP(str6));
     }
 
-
+    /**
+     * DP
+     * @param s
+     * @return
+     */
     public String longestPalindrome_DP(String s) {
         if (null == s || s.equals("")) return "";
         char[] chars = s.toCharArray();
@@ -88,6 +92,55 @@ public class LongestPalindromicSubstring_B {
         }
 
         return longestStr;
+    }
+
+    @Test
+    public void test2() {
+        String str = "abaccdcca";
+        String str1 = "cbbd";
+        String str2 = "babad";
+        String str3 = "abc";
+        String str4 = "aaaaaa";
+        String str5 = "abcda";
+        String str6 = "babad";
+        String str7 = "bb";
+        System.out.println(longestPalindrome1(str));
+        System.out.println(longestPalindrome1(str1));
+        System.out.println(longestPalindrome1(str2));
+        System.out.println(longestPalindrome1(str3));
+        System.out.println(longestPalindrome1(str4));
+        System.out.println(longestPalindrome1(str5));
+        System.out.println(longestPalindrome1(str6));
+        System.out.println(longestPalindrome1(str7));
+    }
+
+    /**
+     * Expand Around Center
+     * @param s
+     * @return
+     */
+    public String longestPalindrome1(String s) {
+        if (null == s || s.equals("")) return "";
+        char[] chars = s.toCharArray();
+        int start = 0, end = 0;
+        for (int i = 1; i < chars.length; i++) {
+            int len1 = checkPalindrome(chars, i, i);
+            int len2 = checkPalindrome(chars, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+
+    private int checkPalindrome(char[] chars, int left, int right) {
+        while (left >= 0 && right < chars.length && chars[left] == chars[right] ) {
+            left--;
+            right++;
+        }
+        return right - left - 1;
     }
 
 }
