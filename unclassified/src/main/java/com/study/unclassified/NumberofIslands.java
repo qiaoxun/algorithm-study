@@ -3,7 +3,6 @@ package com.study.unclassified;
 import org.junit.Test;
 
 public class NumberofIslands {
-
     @Test
     public void test() {
         char[][] grid = {
@@ -67,7 +66,6 @@ public class NumberofIslands {
             }
         }
     }
-
 
     public int numIslands1(char[][] grid) {
         if (grid.length == 0) return 0;
