@@ -19,7 +19,6 @@ public class NumberofIslands {
                 {'1', '1', '1'}
         };
 
-
         char[][] grid2 = {
                 {'1','0','1','1','1'},
                 {'1','0','1','0','1'},
@@ -27,8 +26,11 @@ public class NumberofIslands {
         };
 
         System.out.println(numIslands(grid));
+        System.out.println(numIslands1(grid));
         System.out.println(numIslands(grid1));
+        System.out.println(numIslands1(grid1));
         System.out.println(numIslands(grid2));
+        System.out.println(numIslands1(grid2));
     }
 
     public int numIslands(char[][] grid) {
@@ -63,6 +65,31 @@ public class NumberofIslands {
                 dfsRecurse(i, j - 1, grid, dfs, num);
                 dfsRecurse(i, j + 1, grid, dfs, num);
             }
+        }
+    }
+
+
+    public int numIslands1(char[][] grid) {
+        if (grid.length == 0) return 0;
+        int num = 1;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '1') {
+                    dfsRecurse1(i, j, grid, num++);
+                }
+            }
+        }
+
+        return num - 1;
+    }
+
+    private void dfsRecurse1(int i, int j, char[][] grid, int num) {
+        if (j >= 0 && i >= 0 && i < grid.length && j < grid[i].length && grid[i][j] == '1') {
+            grid[i][j] = '0';
+            dfsRecurse1(i - 1, j, grid, num);
+            dfsRecurse1(i + 1, j, grid, num);
+            dfsRecurse1(i, j - 1, grid, num);
+            dfsRecurse1(i, j + 1, grid, num);
         }
     }
 
