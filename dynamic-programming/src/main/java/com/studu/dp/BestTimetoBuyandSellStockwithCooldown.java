@@ -4,6 +4,10 @@ import org.junit.Test;
 
 /**
  * https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/
+ *
+ * Input: [1,2,3,0,2]
+ * Output: 3
+ * Explanation: transactions = [buy, sell, cooldown, buy, sell]
  */
 public class BestTimetoBuyandSellStockwithCooldown {
 
@@ -12,6 +16,8 @@ public class BestTimetoBuyandSellStockwithCooldown {
 
     }
     public int maxProfit(int[] prices) {
+
+
 
         return 0;
     }
