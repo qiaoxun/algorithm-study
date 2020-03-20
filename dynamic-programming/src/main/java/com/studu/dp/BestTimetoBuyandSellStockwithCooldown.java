@@ -11,13 +11,17 @@ import org.junit.Test;
  */
 public class BestTimetoBuyandSellStockwithCooldown {
 
+
+
     @Test
     public void test() {
 
     }
     public int maxProfit(int[] prices) {
 
+        for (int i = 0; i < prices.length; i++) {
 
+        }
 
         return 0;
     }
