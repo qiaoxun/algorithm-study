@@ -13,8 +13,11 @@ public class BestTimetoBuyandSellStockwithTransactionFee {
         int[] prices2 = {4,5,2,4,3,3,1,2,5,4};
         int fee = 2;
         System.out.println(maxProfit1(prices, fee));
+        System.out.println(maxProfit2(prices, fee));
         System.out.println(maxProfit1(prices1, 3));
+        System.out.println(maxProfit2(prices1, 3));
         System.out.println(maxProfit1(prices2, 1));
+        System.out.println(maxProfit2(prices2, 1));
     }
 
     public int maxProfit(int[] prices, int fee) {
@@ -69,5 +72,17 @@ public class BestTimetoBuyandSellStockwithTransactionFee {
 //        }
 
         return Math.max(dp[prices.length - 1][1], dp[prices.length - 1][2]);
+    }
+
+
+    public int maxProfit2(int[] prices, int fee) {
+        int hold = -prices[0];
+        int cash = 0;
+
+        for (int i = 1; i < prices.length; i++) {
+            hold = Math.max(hold, cash - prices[i]);
+            cash = Math.max(cash, hold + prices[i] - fee);
+        }
+        return cash;
     }
 }
