@@ -20,29 +20,6 @@ public class BestTimetoBuyandSellStockwithTransactionFee {
         System.out.println(maxProfit2(prices2, 1));
     }
 
-    public int maxProfit(int[] prices, int fee) {
-        /**
-         * 0 - hold
-         * 1 - sell
-         */
-        int[][] dp = new int[prices.length][2];
-        dp[0][0] = -prices[0];
-        dp[0][1] = 0;
-
-        int maxPro = 0;
-        for (int i = 1; i < prices.length; i++) {
-            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] - prices[i]);
-            dp[i][1] = dp[i - 1][0] + prices[i] - fee;
-            maxPro = Math.max(maxPro, dp[i][1]);
-        }
-
-        for (int i = 0; i < dp.length; i++) {
-            System.out.println(Arrays.toString(dp[i]));
-        }
-
-        return maxPro;
-    }
-
     public int maxProfit1(int[] prices, int fee) {
         /**
          * 0 - hold: 1 昨天也持有，2 昨天卖掉，今天持有，3 昨天空闲，今天持有
