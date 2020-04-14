@@ -2,8 +2,7 @@ package com.study.unclassified;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Three3Sum {
 
@@ -11,6 +10,7 @@ public class Three3Sum {
     public void test() {
         int[] array = {-1, 0, 1, 2, -1, -4};
         System.out.println(threeSum(array));
+        System.out.println(threeSum1(array));
     }
 
     public List<List<Integer>> threeSum(int[] nums) {
@@ -33,11 +33,44 @@ public class Three3Sum {
     }
 
     public List<List<Integer>> threeSum1(int[] nums) {
-        int sum = 0;
         List<List<Integer>> result = new ArrayList<>();
-        for (int i = 0; i < nums.length - 2; i++) {
+        int len = nums.length;
+        if(nums == null || len < 3) return result;
 
+        Arrays.sort(nums);
+        System.out.println(Arrays.toString(nums));
+        for (int i = 1; i < nums.length - 1; i++) {
+            if (nums[i] > 0) {
+                break;
+            }
+
+            if(i > 0 && nums[i] == nums[i-1]) continue;
+
+            int L = i + 1;
+            int R = nums.length - 1;
+            while (L < R) {
+                if (L == i) {
+                    L++;
+                }
+                if (R == i) {
+                    R--;
+                }
+
+                int sum = nums[i] + nums[L] + nums[R];
+                if (sum == 0) {
+                    result.add(Arrays.asList(nums[i], nums[L], nums[R]));
+                    while (L < R && nums[L] == nums[L + 1]) L++;
+                    while (L < R && nums[R] == nums[R - 1]) R--;
+                    L++;
+                    R--;
+                } else if (sum > 0) {
+                    R--;
+                } else {
+                    L++;
+                }
+            }
         }
+
         return result;
     }
 }
