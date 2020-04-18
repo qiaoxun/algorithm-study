@@ -9,8 +9,13 @@ public class Three3Sum {
     @Test
     public void test() {
         int[] array = {-1, 0, 1, 2, -1, -4};
-        System.out.println(threeSum(array));
-        System.out.println(threeSum1(array));
+        int[] array1 = {0, 0, 0};
+        int[] array2 = {-1, 0, 1};
+//        System.out.println(threeSum(array));
+//        System.out.println(threeSum(array1));
+//        System.out.println(threeSum1(array));
+        System.out.println(threeSum1(array1));
+        System.out.println(threeSum1(array2));
     }
 
     public List<List<Integer>> threeSum(int[] nums) {
@@ -38,8 +43,8 @@ public class Three3Sum {
         if(nums == null || len < 3) return result;
 
         Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        for (int i = 1; i < nums.length - 1; i++) {
+
+        for (int i = 0; i < nums.length - 1; i++) {
             if (nums[i] > 0) {
                 break;
             }
