@@ -51,7 +51,7 @@ public class FourSum {
                     int sum = nums[j] + nums[left] + nums[right];
                     if (sum == leftTarget) {
                         List<Integer> resultList = Arrays.asList(nums[i], nums[j], nums[left], nums[right]);
-                        List<Integer> exsits = lists.stream().filter(eachList -> { return  eachList.containsAll(resultList) && resultList.containsAll(eachList);}).findFirst().orElse(null);
+                        List<Integer> exsits = lists.stream().filter(eachList -> eachList.containsAll(resultList) && resultList.containsAll(eachList)).findFirst().orElse(null);
                         if (null == exsits || exsits.size() == 0) {
                             lists.add(resultList);
                         }
