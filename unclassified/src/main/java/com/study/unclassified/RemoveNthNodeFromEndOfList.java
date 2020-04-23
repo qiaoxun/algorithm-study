@@ -3,6 +3,7 @@ package com.study.unclassified;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RemoveNthNodeFromEndOfList {
@@ -20,7 +21,9 @@ public class RemoveNthNodeFromEndOfList {
 //        node3.next = node4;
 //        node4.next = node5;
 
+//        System.out.println(Arrays.toString(recur(node1, 0, 1)));
         ListNode head = removeNthFromEnd(node1, 2);
+//        ListNode head = removeNthFromEnd_Array_Solution(node1, 2);
 
         while (head != null) {
             System.out.println(head.val);
@@ -29,6 +32,42 @@ public class RemoveNthNodeFromEndOfList {
     }
 
     public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null) {
+            return null;
+        }
+        int[] result = recur(head, n, 1);
+        if (n == result[1]) {
+            return head.next;
+        }
+        return head;
+    }
+
+    public int[] recur(ListNode node, int n, int size) {
+        if (null == node) {
+            return new int[]{n, size};
+        }
+        int currentSize = size;
+        if (node.next != null) {
+            size = size + 1;
+            currentSize = size;
+        } else {
+            return new int[]{n, size};
+        }
+        int[] result = recur(node.next, n, size);
+        int finalSize = result[1];
+        if (n == finalSize - currentSize + 1) {
+            node.next = node.next.next;
+        }
+        return result;
+    }
+
+    /**
+     * array solution
+     * @param head
+     * @param n
+     * @return
+     */
+    public ListNode removeNthFromEnd_Array_Solution(ListNode head, int n) {
         if (head == null)
             return null;
 
