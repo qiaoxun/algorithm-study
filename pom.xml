@@ -12,6 +12,7 @@
         <module>dynamic-programming</module>
         <module>unclassified</module>
         <module>sorting</module>
+        <module>dfs-bfs</module>
     </modules>
 
     <dependencies>
