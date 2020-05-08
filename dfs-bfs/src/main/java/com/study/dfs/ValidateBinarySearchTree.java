@@ -6,13 +6,17 @@ public class ValidateBinarySearchTree {
 
     @Test
     public void test() {
-        TreeNode node = new TreeNode(2);
+        TreeNode node = new TreeNode(3);
         TreeNode node1 = new TreeNode(1);
-        TreeNode node2 = new TreeNode(7);
-        TreeNode node3 = new TreeNode(3);
-        TreeNode node4 = new TreeNode(8);
+        TreeNode node2 = new TreeNode(5);
+        TreeNode node3 = new TreeNode(0);
+        TreeNode node4 = new TreeNode(2);
+        TreeNode node5 = new TreeNode(3);
         node.left = node1;
         node.right = node2;
+        node1.left = node3;
+        node1.right = node4;
+//        node4.right = node5;
 //        node2.left = node3;
 //        node2.right = node4;
         System.out.println(isValidBST(node));
@@ -20,52 +24,23 @@ public class ValidateBinarySearchTree {
 
     public boolean isValidBST(TreeNode root) {
         if (null == root) return true;
-        return isValid(root, root.val, 0);
+        return isValid(root, null, null);
     }
 
     /**
-     *
      * @param node
-     * @param val
-     * @param direction -1 -> left, 1 -> right
      * @return
      */
-    private boolean isValid(TreeNode node, int val, int direction) {
-        boolean result = true;
-        if (null != node.left) {
-            if (direction > 0 && node.left.val <= val) {
-                return false;
-            }
-            if (direction < 0 && node.left.val >= val) {
-                return false;
-            }
+    private boolean isValid(TreeNode node, Integer lower, Integer upper) {
+        if (null == node) return true;
 
-            if (node.val > node.left.val) {
-                if (!isValid(node.left, node.val, -1)) {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
+        if (null != lower && node.val <= lower) return false;
+        if (null != upper && node.val >= upper) return false;
 
-        if (null != node.right) {
-            if (direction > 0 && node.right.val <= val) {
-                return false;
-            }
-            if (direction < 0 && node.right.val >= val) {
-                return false;
-            }
+        if (!isValid(node.left, lower, node.val)) return false;
+        if (!isValid(node.right, node.val, upper)) return false;
 
-            if (node.val < node.right.val) {
-                if (!isValid(node.right, node.val, 1)) {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        return result;
+        return true;
     }
 
 
