@@ -2,10 +2,12 @@ package com.study.unclassified;
 
 import org.junit.Test;
 
+import java.util.Stack;
+
 public class BinaryTreeTraversal {
 
     @Test
-    public void testPreOrder() {
+    public void testPreOrderStack() {
         TreeNode node = new TreeNode(3);
         TreeNode node1 = new TreeNode(1);
         TreeNode node2 = new TreeNode(5);
@@ -17,14 +19,46 @@ public class BinaryTreeTraversal {
         node1.left = node3;
         node1.right = node4;
         node4.right = node5;
-        preOrder(node);
+        preOrderRecursion(node);
     }
 
-    public void preOrder(TreeNode node) {
+    public void preOrderStack(TreeNode node) {
+        Stack<TreeNode> stack = new Stack<>();
+
+        while (null != node && !stack.isEmpty()) {
+            System.out.println(node.val);
+            while (null != node) {
+                stack.push(node);
+                node = node.left;
+            }
+
+            if (!stack.isEmpty()) {
+                node = stack.pop().right;
+            }
+        }
+    }
+
+    @Test
+    public void testPreOrderRecursion() {
+        TreeNode node = new TreeNode(3);
+        TreeNode node1 = new TreeNode(1);
+        TreeNode node2 = new TreeNode(5);
+        TreeNode node3 = new TreeNode(0);
+        TreeNode node4 = new TreeNode(2);
+        TreeNode node5 = new TreeNode(3);
+        node.left = node1;
+        node.right = node2;
+        node1.left = node3;
+        node1.right = node4;
+        node4.right = node5;
+        preOrderRecursion(node);
+    }
+
+    public void preOrderRecursion(TreeNode node) {
         if (node != null) {
             System.out.println(node.val);
-            preOrder(node.left);
-            preOrder(node.right);
+            preOrderRecursion(node.left);
+            preOrderRecursion(node.right);
         }
     }
 
