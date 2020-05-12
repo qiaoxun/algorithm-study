@@ -77,14 +77,34 @@ public class BinaryTreeTraversal {
         node4.right = node5;
 //        node2.left = node3;
 //        node2.right = node4;
-        middleOrder(node);
+        middleOrderRecursion(node);
+        System.out.println("------------");
+        middleOrderStack(node);
     }
 
-    public void middleOrder(TreeNode node) {
+    public void middleOrderStack(TreeNode node) {
+        Stack<TreeNode> stack = new Stack<>();
+
+        while (node != null || !stack.isEmpty()) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+
+            if (!stack.isEmpty()) {
+                node = stack.pop();
+                System.out.println(node.val);
+                node = node.right;
+            }
+        }
+
+    }
+
+    public void middleOrderRecursion(TreeNode node) {
         if (node != null) {
-            middleOrder(node.left);
+            middleOrderRecursion(node.left);
             System.out.println(node.val);
-            middleOrder(node.right);
+            middleOrderRecursion(node.right);
         }
     }
 
