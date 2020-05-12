@@ -2,6 +2,11 @@ package com.study.dfs;
 
 import org.junit.Test;
 
+import java.util.Stack;
+
+/**
+ * https://leetcode.com/problems/validate-binary-search-tree/
+ */
 public class ValidateBinarySearchTree {
 
     @Test
@@ -20,6 +25,7 @@ public class ValidateBinarySearchTree {
 //        node2.left = node3;
 //        node2.right = node4;
         System.out.println(isValidBST(node));
+        System.out.println(isValidBSTMiddleStack(node));
     }
 
     public boolean isValidBST(TreeNode root) {
@@ -43,6 +49,25 @@ public class ValidateBinarySearchTree {
         return true;
     }
 
+    public boolean isValidBSTMiddleStack(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        long lastVal = Long.MIN_VALUE;
+        TreeNode node = root;
+        while (node != null || !stack.isEmpty()) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+
+            if (!stack.isEmpty()) {
+                node = stack.pop();
+                if (node.val <= lastVal) return false;
+                lastVal = node.val;
+                node = node.right;
+            }
+        }
+        return true;
+    }
 
     private static class TreeNode {
         int val;
