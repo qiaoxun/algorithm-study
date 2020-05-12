@@ -3,6 +3,7 @@ package com.study.unclassified;
 import org.junit.Test;
 
 import java.util.Stack;
+import java.util.TreeMap;
 
 public class BinaryTreeTraversal {
 
@@ -108,7 +109,30 @@ public class BinaryTreeTraversal {
         }
     }
 
+    @Test
+    public void testPostOrder() {
+        TreeNode node = new TreeNode(3);
+        TreeNode node1 = new TreeNode(1);
+        TreeNode node2 = new TreeNode(5);
+        TreeNode node3 = new TreeNode(0);
+        TreeNode node4 = new TreeNode(2);
+        TreeNode node5 = new TreeNode(3);
+        node.left = node1;
+        node.right = node2;
+        node1.left = node3;
+        node1.right = node4;
+        node4.right = node5;
+        postOrderRecursion(node);
+        System.out.println("============");
+    }
 
+    public void postOrderRecursion(TreeNode node) {
+        if (null != node) {
+            postOrderRecursion(node.left);
+            postOrderRecursion(node.right);
+            System.out.println(node.val);
+        }
+    }
 
     private static class TreeNode {
         int val;
