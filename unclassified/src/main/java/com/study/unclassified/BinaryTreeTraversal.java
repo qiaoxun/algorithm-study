@@ -124,6 +124,7 @@ public class BinaryTreeTraversal {
         node4.right = node5;
         postOrderRecursion(node);
         System.out.println("============");
+        postOrderStack(node);
     }
 
     public void postOrderRecursion(TreeNode node) {
@@ -133,6 +134,30 @@ public class BinaryTreeTraversal {
             System.out.println(node.val);
         }
     }
+
+    public void postOrderStack(TreeNode node) {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode lastVisitNode = node;
+        while (null != node || !stack.isEmpty()) {
+
+            while (null != node) {
+                stack.push(node);
+                node = node.left;
+            }
+
+            node = stack.peek();
+            if (node.right == null || node.right == lastVisitNode) {
+                System.out.println(node.val);
+                stack.pop();
+                lastVisitNode = node;
+                node = null;
+            } else {
+                node =  node.right;
+            }
+
+        }
+    }
+
 
     private static class TreeNode {
         int val;
