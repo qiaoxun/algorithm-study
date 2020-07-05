@@ -9,28 +9,33 @@ public class GenerateParentheses {
 
     @Test
     public void test() {
-        System.out.println(generateParenthesis(3));
+        System.out.println(generateParenthesisBruteForce(3));
     }
+
+
+
+
+
 
     char left = '(';
     char right = ')';
 
-    public List<String> generateParenthesis(int n) {
+    public List<String> generateParenthesisBruteForce(int n) {
         List<String> list = new ArrayList<>();
-        generateAll(new char[2 * n], 0, list);
+        generateAllBruteForce(new char[2 * n], 0, list);
         return list;
     }
 
-    private void generateAll(char[] chars, int pos, List<String> list) {
+    private void generateAllBruteForce(char[] chars, int pos, List<String> list) {
         if (pos == chars.length) {
             if (isValid(chars)) {
                 list.add(new String(chars));
             }
         } else {
             chars[pos] = left;
-            generateAll(chars, pos + 1, list);
+            generateAllBruteForce(chars, pos + 1, list);
             chars[pos] = right;
-            generateAll(chars, pos + 1, list);
+            generateAllBruteForce(chars, pos + 1, list);
         }
     }
 
