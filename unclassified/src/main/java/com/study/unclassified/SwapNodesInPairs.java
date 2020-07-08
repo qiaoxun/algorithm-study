@@ -15,7 +15,7 @@ public class SwapNodesInPairs {
 
         node1.next = node2;
         node2.next = node3;
-        node3.next = node4;
+//        node3.next = node4;
 
         ListNode head = swapPairs(node1);
         while (null != head) {
@@ -25,16 +25,24 @@ public class SwapNodesInPairs {
     }
 
     public ListNode swapPairs(ListNode head) {
-        ListNode nodeToReturn = head;
+
+        return swapNode(head, null);
+    }
+
+    public ListNode swapNode(ListNode nodeToSwap, ListNode preNode) {
+        ListNode nodeToReturn = nodeToSwap;
         ListNode nextToSwap;
 
-        if (null != head && null != head.next) {
-            ListNode nextNode = head.next;
+        if (null != nodeToSwap && null != nodeToSwap.next) {
+            ListNode nextNode = nodeToSwap.next;
             nextToSwap = nextNode.next;
-            head.next = nextToSwap;
-            nextNode.next = head;
+            nodeToSwap.next = nextToSwap;
+            nextNode.next = nodeToSwap;
             nodeToReturn = nextNode;
-            swapPairs(nextToSwap);
+            if (null != preNode) {
+                preNode.next = nextNode;
+            }
+            swapNode(nextToSwap, nodeToSwap);
         }
         return nodeToReturn;
     }
