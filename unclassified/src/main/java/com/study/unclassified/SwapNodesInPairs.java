@@ -15,7 +15,7 @@ public class SwapNodesInPairs {
 
         node1.next = node2;
         node2.next = node3;
-        node3.next = node4;
+//        node3.next = node4;
 
         ListNode head = swapPairs(node1);
         while (null != head) {
@@ -25,6 +25,26 @@ public class SwapNodesInPairs {
     }
 
     public ListNode swapPairs(ListNode head) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+
+        ListNode preNode = dummy;
+
+        while (null != head && null != head.next) {
+            // swap
+            ListNode secondNode = head.next;
+            head.next = secondNode.next;
+            secondNode.next = head;
+
+            preNode.next = secondNode;
+            preNode = head;
+            head = head.next;
+        }
+
+        return dummy.next;
+    }
+
+    public ListNode swapPairs2(ListNode head) {
 
         if (null == head || null == head.next)
             return head;
