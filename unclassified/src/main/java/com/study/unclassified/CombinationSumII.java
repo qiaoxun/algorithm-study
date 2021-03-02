@@ -9,8 +9,9 @@ public class CombinationSumII {
 
     @Test
     public void test() {
-        int[] candidates = {10,1,2,7,6,1,5};
-        int target = 8;
+//        int[] candidates = {10,1,2,7,6,1,5};
+        int[] candidates = {2,5,2,1,2};
+        int target = 5;
         combinationSum2(candidates, target);
     }
 
@@ -20,32 +21,18 @@ public class CombinationSumII {
     }
     public void calculate(int[] candidates, int target, int cursor, List<Integer> combination) {
         if (cursor >= candidates.length) return;
-//        if (target < 0) {
-////            combination.remove(combination.size() - 1);
-//            calculate(candidates, target + candidates[cursor - 1] - candidates[cursor], cursor, combination);
-//            return;
-//        } else if (target == 0) {
-//            System.out.println("Yes" + combination);
-//            return;
-//        }
-//        int candidate = candidates[cursor];
-//
-//        combination.add(candidate);
-//        calculate(candidates, target - candidate, cursor + 1, combination);
-//
-//        combination.remove(combination.size() - 1);
-//        calculate(candidates, target, cursor + 1, combination);
+
         int candidate = candidates[cursor];
         if (target == candidate) {
             combination.add(candidate);
             System.out.println("Yes" + combination);
+            combination.remove(combination.size() - 1);
         } else if (candidate < target) {
             combination.add(candidate);
             calculate(candidates, target - candidate, cursor + 1, combination);
-        } else {
-            calculate(candidates, target, cursor + 1, combination);
+            combination.remove(combination.size() - 1);
         }
-
+        calculate(candidates, target, cursor + 1, combination);
     }
 
     public void calculate1(List<List<Integer>> result, List<Integer> combination, int[] candidates, int target, int cursor) {
