@@ -11,7 +11,7 @@ public class JumpGameII {
 //        int[] nums = {10,9,8,7,6,5,4,3,2,1,1,0};
 //        int[] nums = {2,9,6,5,7,0,7,2,7,9,3,2,2,5,7,8,1,6,6,6,3,5,2,2,6,3};
         int[] nums = {9,4,5,4,1,8,1,2,0,7,8,7,0,6,6,1,1,2,5,0,9,8,4,7,9,6,8,1,4,0,8,5,5,3,9,8,1,2,2,3,0,1,3,2,7,9,3,0,1};
-        System.out.println(jump1(nums));
+        System.out.println(jump2(nums));
     }
 
     public int jump(int[] nums) {
@@ -28,7 +28,6 @@ public class JumpGameII {
         }
         return steps;
     }
-
 
     public int jump1(int[] nums) {
         int steps = 0;
@@ -48,7 +47,21 @@ public class JumpGameII {
 
 
 
+    public int jump2(int[] nums) {
+        int steps = 0;
+        int end = nums[0];
+        int max = 0;
 
+        for (int i = 0; i < nums.length - 1; i++) {
+            max = Math.max(max, nums[i] + i);
+            if (i == end) {
+                steps ++;
+                end = max;
+            }
+        }
+
+        return steps;
+    }
 
 
 
