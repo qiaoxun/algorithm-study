@@ -138,10 +138,63 @@ public class AddTwoNumbers {
         return dummyNode.next;
     }
 
+
+    // --------------------------------------- - - - -- - -- - - -- - - -- - - - -- -- - ----  - - - --
+
+    public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
+
+        ListNode dummyNode1 = l1;
+        ListNode dummyNode2 = l2;
+
+        int value1 = 0;
+        int value2 = 0;
+
+        ListNode resultNode = new ListNode(0);
+        ListNode dummyResultNode = resultNode;
+
+        int carry = 0;
+
+        while (true) {
+            if (dummyNode1 == null && dummyNode2 == null) {
+                break;
+            }
+            if (null != dummyNode1) {
+                value1 = dummyNode1.val;
+                dummyNode1 = dummyNode1.next;
+            } else {
+                value1 = 0;
+            }
+
+            if (null != dummyNode2) {
+                value2 = dummyNode2.val;
+                dummyNode2 = dummyNode2.next;
+            } else {
+                value2 = 0;
+            }
+
+            int result = value1 + value2 + carry;
+
+            carry = result / 10;
+
+            dummyResultNode.next = new ListNode(result % 10);
+            dummyResultNode = dummyResultNode.next;
+        }
+
+        if (carry > 0) {
+            dummyResultNode.next = new ListNode(carry);
+        }
+
+        return resultNode.next;
+    }
+
+
+
+
     class ListNode {
         int val;
         ListNode next;
         ListNode(int x) { val = x; }
+        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
     }
 
 }
