@@ -2,8 +2,7 @@ package com.study.unclassified;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class AddTwoNumbersTwo {
 
@@ -46,7 +45,49 @@ public class AddTwoNumbersTwo {
         }
     }
 
+    /**
+     * Using Stack
+     * @param l1
+     * @param l2
+     * @return
+     */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode resultNode = null;
+
+        Deque<Integer> stack1 = new LinkedList<Integer>();
+        Deque<Integer> stack2 = new LinkedList<Integer>();
+
+
+        int carry = 0;
+        while (l1 != null || l2 != null) {
+            if (l1 != null) {
+                stack1.push(l1.val);
+                l1 = l1.next;
+            }
+
+            if (l2 != null) {
+                stack2.push(l2.val);
+                l2 = l2.next;
+            }
+        }
+
+        while (!stack1.isEmpty() || !stack2.isEmpty() || carry != 0) {
+            int value1 = stack1.isEmpty() ? 0 : stack1.pop();
+            int value2 = stack2.isEmpty() ? 0 : stack2.pop();
+
+            int result = (value1 + value2 + carry) % 10;
+            carry = (value1 + value2 + carry) / 10;
+            ListNode cur = new ListNode(result);
+
+            cur.next = resultNode;
+            resultNode = cur;
+
+        }
+
+        return resultNode;
+    }
+
+    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
         ListNode resultNode = new ListNode(0);
         ListNode dummyResultNode = resultNode;
         int carry = 0;
@@ -104,7 +145,7 @@ public class AddTwoNumbersTwo {
      * @param l2
      * @return
      */
-    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
+    public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
         ListNode dummyNode1 = l1;
         ListNode dummyNode2 = l2;
         ListNode resultNode = new ListNode(0);
