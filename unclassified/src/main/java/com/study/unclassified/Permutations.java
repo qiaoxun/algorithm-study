@@ -1,22 +1,25 @@
 package com.study.unclassified;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class Permutations {
 
     public List<List<Integer>> permute(int[] nums) {
 
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = 0; j < nums.length; j++) {
-
-            }
-        }
+        List<int[]> list = new ArrayList<>();
+        helper(nums, new int[nums.length], 0, list);
 
         return null;
     }
 
-    private void helper() {
-
+    private int[] helper(int[] nums, int[] singleResult, int index, List<int[]> result) {
+        for (int i = index; i < nums.length; i++) {
+            singleResult[index] = nums[i];
+            helper(nums, singleResult, index + 1);
+        }
+        return result;
     }
 
 
