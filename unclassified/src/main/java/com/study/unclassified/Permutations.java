@@ -7,7 +7,7 @@ public class Permutations {
     public static void main(String[] args) {
         Permutations permutations = new Permutations();
 
-        List<List<Integer>> result = permutations.permute(new int[] {1, 2, 3});
+        List<List<Integer>> result = permutations.permute(new int[] {1, 1, 3});
         result.forEach(each -> {
             System.out.println(Arrays.toString(each.toArray()));
         });
