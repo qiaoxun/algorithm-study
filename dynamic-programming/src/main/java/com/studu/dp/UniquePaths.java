@@ -16,6 +16,15 @@ public class UniquePaths {
         System.out.println("dpUniquePathsOPT = " + uniquePaths.dpUniquePathsOPT(7, 4));
     }
 
+    /**
+     *  0  1  1  1  1
+     *  1  2  3  4  5
+     *  1  3  6  0  0
+     *  1  4  10 0  0
+     * @param m
+     * @param n
+     * @return
+     */
     public int dpUniquePaths(int m, int n) {
         if (m == 0 && n == 0) {
             return 0;
