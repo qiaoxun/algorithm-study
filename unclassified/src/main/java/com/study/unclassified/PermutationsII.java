@@ -7,18 +7,19 @@ import java.util.List;
 public class PermutationsII {
 
     public static void main(String[] args) {
-        int[] nums = {1, 2, 1};
+        int[] nums = {1, 2, 1, 1};
         List<List<Integer>> result = new PermutationsII().permuteUnique(nums);
         result.forEach(node -> {
             System.out.println(node);
         });
     }
 
-
     public List<List<Integer>> permuteUnique(int[] nums) {
         boolean[] used = new boolean[nums.length];
         List<Integer> current = new ArrayList<>();
         List<List<Integer>> result = new ArrayList<>();
+
+        Arrays.sort(nums);
         dfs(nums, used, current, result);
         return result;
     }
@@ -29,7 +30,7 @@ public class PermutationsII {
             return;
         }
         for (int i = 0; i < nums.length; i++) {
-            if (used[i]) {
+            if (used[i] || (i > 0 && nums[i] == nums[i - 1] && used[i - 1])) {
                 continue;
             }
             current.add(nums[i]);
