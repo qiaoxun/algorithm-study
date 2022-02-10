@@ -12,7 +12,25 @@ public class RemoveDuplicates {
         System.out.println(Arrays.toString(nums));
     }
 
+
     public int removeDuplicates(int[] nums) {
+        if (null == nums || nums.length == 0) return 0;
+        if (nums.length == 1) return 1;
+        int tmp = nums[0];
+        int length = nums.length;
+        int slow = 1;
+
+        for (int i = 1; i < length; i++) {
+            if (nums[i] != tmp) {
+                tmp = nums[i];
+                nums[slow] = nums[i];
+                slow++;
+            }
+        }
+        return slow;
+    }
+
+    public int removeDuplicates1(int[] nums) {
         if (null == nums || nums.length == 0) return 0;
         if (nums.length == 1) return 1;
         int tmp = nums[0];
