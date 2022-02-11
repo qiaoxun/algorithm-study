@@ -15,6 +15,18 @@ public class RemoveDuplicates {
 
     public int removeDuplicates(int[] nums) {
         if (null == nums || nums.length == 0) return 0;
+        int slow = 0;
+
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != nums[slow]) {
+                nums[++slow] = nums[i];
+            }
+        }
+        return slow + 1;
+    }
+
+    public int removeDuplicates2(int[] nums) {
+        if (null == nums || nums.length == 0) return 0;
         if (nums.length == 1) return 1;
         int tmp = nums[0];
         int length = nums.length;
