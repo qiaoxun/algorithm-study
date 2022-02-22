@@ -13,6 +13,7 @@
         <module>unclassified</module>
         <module>sorting</module>
         <module>dfs-bfs</module>
+        <module>interview</module>
     </modules>
 
     <dependencies>
