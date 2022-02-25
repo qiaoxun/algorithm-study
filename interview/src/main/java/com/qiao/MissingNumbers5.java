@@ -21,7 +21,7 @@ public class MissingNumbers5 {
         for (int i = 0; i < array.length; i++) {
             if (i == 0) {
                 if (array[i] - 500 > 0) {
-                    addMissingNumbers(500, array[i], result);
+                    addMissingNumbers(500, array[i] + 1, result);
                 }
             } else {
                 if (array[i] - array[i - 1] != 1) {
