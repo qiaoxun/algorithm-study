@@ -12,8 +12,32 @@ public class CompareVersionNumbers {
         System.out.println(compareVersionNumbers.compareVersion("0.1", "1.1"));
     }
 
-
     public int compareVersion(String version1, String version2) {
+        String[] arr1 = version1.split("\\.");
+        String[] arr2 = version2.split("\\.");
+
+        int maxLength = arr1.length > arr2.length ? arr1.length : arr2.length;
+
+        for (int i = 0; i < maxLength; i++) {
+            int x = 0;
+            int y = 0;
+            if (i < arr1.length) {
+                x = Integer.parseInt(arr1[i]);
+            }
+            if (i < arr2.length) {
+                y = Integer.parseInt(arr2[i]);
+            }
+            if (x < y) {
+                return -1;
+            }
+            if (x > y) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    public int compareVersion1(String version1, String version2) {
         String[] arr1 = version1.split("\\.");
         String[] arr2 = version2.split("\\.");
 
