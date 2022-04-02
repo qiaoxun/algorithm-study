@@ -15,6 +15,7 @@
         <module>dfs-bfs</module>
         <module>interview</module>
         <module>leetcode-medium</module>
+        <module>leetcode-easy</module>
     </modules>
 
     <dependencies>
