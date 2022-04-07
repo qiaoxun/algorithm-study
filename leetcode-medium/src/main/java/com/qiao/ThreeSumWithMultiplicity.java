@@ -16,6 +16,32 @@ public class ThreeSumWithMultiplicity {
     }
 
     public int threeSumMulti(int[] arr, int target) {
+//        Arrays.sort(arr);
+        int count = 0;
+        int firstIndex = 0;
+        int secondIndex = 1;
+        int thirdIndex = 2;
+        while (firstIndex < arr.length - 2) {
+            if (arr[firstIndex] + arr[secondIndex] + arr[thirdIndex] == target) {
+                count++;
+            }
+            if (thirdIndex == arr.length - 1) {
+                if (secondIndex == arr.length - 2) {
+                    firstIndex++;
+                    secondIndex = firstIndex + 1;
+                } else {
+                    secondIndex++;
+                }
+                thirdIndex = secondIndex + 1;
+            } else {
+                thirdIndex++;
+            }
+        }
+
+        return count;
+    }
+
+    public int threeSumMulti1(int[] arr, int target) {
         Arrays.sort(arr);
         int count = 0;
         for (int i = 0; i < arr.length; i++) {
