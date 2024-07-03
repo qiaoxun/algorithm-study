@@ -16,13 +16,15 @@
         <module>interview</module>
         <module>leetcode-medium</module>
         <module>leetcode-easy</module>
+        <module>binary-tree</module>
+        <module>greedy</module>
     </modules>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.13.2</version>
         </dependency>
     </dependencies>
 
