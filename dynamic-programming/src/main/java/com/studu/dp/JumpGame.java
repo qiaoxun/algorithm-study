@@ -1,6 +1,9 @@
 package com.studu.dp;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class JumpGame {
 
     public static void main(String[] args) {
@@ -18,10 +21,11 @@ public class JumpGame {
     }
 
     public boolean canJump(int[] nums) {
-         return jump(nums, 0);
+        Map<String, Boolean> cache = new HashMap<>();
+        return jump(nums, 0, cache);
     }
 
-    public boolean jump(int[] nums, int currentIndex) {
+    public boolean jump(int[] nums, int currentIndex, Map<String, Boolean> cache) {
         if (currentIndex >= nums.length - 1)
             return true;
 
@@ -31,7 +35,14 @@ public class JumpGame {
                 return false;
             }
             for (int j = step; j > 0; j--) {
-                boolean re = jump(nums, j + currentIndex);
+                Boolean cacheResult = cache.get(currentIndex + "-" + j);
+                if (cacheResult != null) {
+                    return cacheResult;
+                }
+                boolean re = jump(nums, j + currentIndex, cache);
+                cache.put(currentIndex + "-" + j, re);
+
+//                System.out.println("index: " + currentIndex + ", step: " + j + ", result: " + re);
                 if (re) {
                     return true;
                 }
